@@ -8,3 +8,5 @@ Tools:
 - Coil 
 - Coroutines
 - GSON
+- Using images WEBP converter from PNG files
+- ViewBinding
