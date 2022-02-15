@@ -1,14 +1,17 @@
 package com.example.mywheatherapp
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.example.mywheatherapp.databinding.ActivityMainBinding
 import com.example.mywheatherapp.network.WeatherEntity
 import com.example.mywheatherapp.network.WeatherService
+import com.example.mywheatherapp.utils.checkForInternet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,25 +24,27 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
 
-        setupActionBar()
-//        setupViewData()
+//        setupActionBar()
+        setupViewData()
 //        binding.addressTextView.text = "Holaaa"
     }
 
-//    private fun setupViewData() {
-//        if (checkForInternet(this)) {
-//            lifecycleScope.launch {
-//                formatResponse(getWeather())
-//            }
-//        } else {
-//            showError("Sin Accesso a Internet")
-//        }
-//    }
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun setupViewData() {
+        if (checkForInternet(this)) {
+            lifecycleScope.launch {
+                formatResponse(getWeather())
+            }
+        } else {
+            showError("Sin Accesso a Internet")
+        }
+    }
 
     private fun setupActionBar() {
         lifecycleScope.launch {
