@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             val tempMin = "Min: ${weatherEntity.main.temp_min.toInt()}°"
             val tempMax = "Max: ${weatherEntity.main.temp_max.toInt()}°"
             val status = "Sensación: ${weatherEntity.main.feels_like.toInt()}°"
-//        setupTitle("$temp en $name, $country")
+            setupTitle("$temp en $cityName, $country")
 
             // Otra forma de utilzarlo
             // binding.addressTextView.text = address
