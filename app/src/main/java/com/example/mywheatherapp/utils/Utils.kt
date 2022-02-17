@@ -4,34 +4,30 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.annotation.RequiresApi
 
-@RequiresApi(Build.VERSION_CODES.M)
 fun checkForInternet(context: Context): Boolean {
-    // registrar la actividad con el servicio connectivity Manager
+    // Registrar la actividad con el servicio connectivity manager
     val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-    // si la version de Android es M o mayor se usa NetworkCapabilities para verificar
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-        // Devuelve un objeto de tipo Network corespodiente a la conectividad del dispositivo
-        val network = connectivityManager.activeNetwork?: return false
-
-        // Representacion of the capabilities of an active netwok.
+    // Si la versión de Android es M o mayor se usa NetworkCaoabilities para verificar
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        // Devuelve un objeto de tipo Network correspondiente a la conectividad del dispositivo
+        val network = connectivityManager.activeNetwork ?: return false
+        // Representation of the capabilities of an active network.
         val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
 
-        return when{
-            // Indica si la red usa Ttranspote WiFi o tiene conectividad WiFi
+        return when {
+            // Indica si la red usa transporte WiFi o tiene conectividad WiFi
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            // Indica si la red tiene conectividad por datos moviles
+            // Inidca si la red tiene conectividad por datos móviles
             activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+
             else -> false
         }
-    }else{
-        // Si la version de Ansroid es menor a M
+    } else {
+        // Si la versión de Android es menor a M
         @Suppress("DEPRECATION") val networkInfo =
             connectivityManager.activeNetworkInfo ?: return false
         @Suppress("DEPRECATION")
         return networkInfo.isConnected
     }
-
 }

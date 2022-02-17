@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">myWheatherApp</string>
+    <string name="sunrise">Amanecer</string>
+    <string name="sunset">Atardecer</string>
+    <string name="wind">Vientos</string>
+    <string name="pressure">"Presion: "</string>
+    <string name="humidity">Humedad</string>
+    <string name="created_by">Creado por</string>
+    <string name="dev_name">RobeHerrera</string>
+    <string name="update">Actualizar</string>
 </resources>

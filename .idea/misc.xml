@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/drawable/gradient_bg.xml" value="0.1845" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/layout/activity_barriers.xml" value="0.1" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/layout/model.xml" value="0.1" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/menu/actions.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/menu/menu_main.xml" value="0.23385416666666667" />
       </map>
     </option>
   </component>
