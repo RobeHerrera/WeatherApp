@@ -1,4 +1,4 @@
-package com.example.mywheatherapp.network
+package com.example.myweatherapp.network
 
 data class WeatherEntity(
     val base: String,

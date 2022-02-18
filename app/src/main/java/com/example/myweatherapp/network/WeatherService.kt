@@ -1,4 +1,4 @@
-package com.example.mywheatherapp.network
+package com.example.myweatherapp.network
 
 import retrofit2.http.GET
 import retrofit2.http.Query

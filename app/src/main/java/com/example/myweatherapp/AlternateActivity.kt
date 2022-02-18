@@ -1,17 +1,14 @@
-package com.example.mywheatherapp
+package com.example.myweatherapp
 
 import android.os.AsyncTask
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.json.JSONObject
 import java.lang.Exception
 import java.net.URL
-import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 

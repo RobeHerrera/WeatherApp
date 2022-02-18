@@ -1,21 +1,27 @@
-package com.example.mywheatherapp
+package com.example.myweatherapp
 
-import android.os.Build
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.annotation.SuppressLint
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import coil.load
-import com.example.mywheatherapp.databinding.ActivityMainBinding
-import com.example.mywheatherapp.databinding.ModelBinding
-import com.example.mywheatherapp.network.WeatherEntity
-import com.example.mywheatherapp.network.WeatherService
-import com.example.mywheatherapp.utils.checkForInternet
+import com.example.myweatherapp.databinding.ModelBinding
+import com.example.myweatherapp.network.WeatherEntity
+import com.example.myweatherapp.network.WeatherService
+import com.example.myweatherapp.utils.checkForInternet
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,18 +33,43 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+
+    private val TAG = "MainActivityError"
+    private val REQUEST_PREMISSIONS_REQUEST_CODE = 34
+
+    private var latitude = ""
+    private var longitude = ""
+
     private lateinit var binding: ModelBinding
+
+    // Punto de entrada par ael API Fused Location Provider
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ModelBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        setContentView(R.layout.activity_main)
 
-//        setupActionBar()
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+//        if (!checkPermission()){
+//            requestPermissions()
+//        }else{
+//            if (checkForInternet(this)){
+//                getLastLocation()
+//                setupViewData()
+//            }else{
+//                showError("Sin acceso a Internet")
+//                binding.detailsContainer.isVisible = false
+//            }
+//        }
+
         setupViewData()
-//        binding.addressTextView.text = "Holaaa"
-    }
+
+        // old way
+//        setContentView(R.layout.activity_main)
+//        setupActionBar()
+    } // End onCreate()
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -156,5 +187,61 @@ class MainActivity : AppCompatActivity() {
     private fun showIndicator(visible: Boolean) {
         binding.progressBarIndicator.isVisible = visible
     }
+
+    /**
+     * Log.e(String, String) (error)
+     * Log.w(String, String) (advertencia)
+     * Log.i(String, String) (información)
+     * Log.d(String, String) (depuración)
+     * Log.v(String, String) (registro detallado)
+     */
+
+    @SuppressLint("MissingPermission")
+    private fun getLastLocation(){
+        fusedLocationProviderClient.lastLocation.addOnCompleteListener{ taskLocation ->
+            if(taskLocation.isSuccessful && taskLocation.result != null){
+                val location = taskLocation.result
+                latitude= location?.latitude.toString()
+                longitude = location?.longitude.toString()
+                Log.e(TAG,"GetLasLoc Lat: $latitude Long: $longitude")
+            }else{
+                Log.w(TAG,"getLastLocation:exception", taskLocation.exception)
+                showSnackbar(R.string.no_location_detected)
+            }
+
+        }
+    }
+
+    /**
+    * Shows a [Snackbar].
+    *
+    * @param snackStrId The id for the string resource for the Snackbar text.
+    * @param actionStrId The text of the action item.
+    * @param listener The listener associated with the Snack.
+    */
+    private fun showSnackbar(
+        snackStrId: Int,
+        actionStrId: Int = 0,
+        listener: View.OnClickListener? = null
+    ) {
+        val snackbar = Snackbar.make(findViewById(android.R.id.content), getString(snackStrId),
+        LENGTH_INDEFINITE)
+        if(actionStrId != 0 && listener != null){
+            snackbar.setAction(getString(actionStrId),listener)
+        }
+        snackbar.show()
+    }
+
+//    private fun checkPermissions() = ActivityCompat.checkSelfPermission(this,ACCESS_COARSE_LOCATION) == PERMISSION_GRATED
+
+    private fun startLocationPermissionRequest(){
+        ActivityCompat.requestPermissions(this, arrayOf(ACCESS_COARSE_LOCATION), REQUEST_PREMISSIONS_REQUEST_CODE)
+    }
+
+    private fun requestPermissions(){
+
+    }
+
+
 
 }
