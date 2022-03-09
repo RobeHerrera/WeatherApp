@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">myWheatherApp</string>
+    <string name="app_name">myWeatherApp</string>
     <string name="sunrise">Amanecer</string>
     <string name="sunset">Atardecer</string>
     <string name="wind">Vientos</string>
