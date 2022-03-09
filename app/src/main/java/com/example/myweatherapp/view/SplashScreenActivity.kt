@@ -1,4 +1,4 @@
-package com.example.myweatherapp
+package com.example.myweatherapp.view
 
 import android.content.Intent
 import android.os.Build
@@ -11,9 +11,11 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.example.myweatherapp.R
 import com.example.myweatherapp.databinding.ActivitySplashScreenBinding
 
 class SplashScreenActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,9 +24,9 @@ class SplashScreenActivity : AppCompatActivity() {
 
         setContentView(splashScreenBinding.root)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.insetsController?.hide(WindowInsets.Type.statusBars())
-        }else{
+        } else {
             @Suppress("DEPRECATION")
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -33,23 +35,24 @@ class SplashScreenActivity : AppCompatActivity() {
         }
 
         val splashAnimation = AnimationUtils.loadAnimation(this@SplashScreenActivity,
-            R.anim.splash_anim)
+            R.anim.splash_anim
+        )
         splashScreenBinding.appTextView.animation = splashAnimation
+
         splashAnimation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(p0: Animation?) { }
-            override fun onAnimationEnd(p0: Animation?) {
+            override fun onAnimationStart(animation: Animation?) {}
+
+            override fun onAnimationEnd(animation: Animation?) {
                 splashScreenBinding.appTextView.visibility = View.VISIBLE
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
                     startActivity(intent)
                     finish()
-                },50)
+                }, 1000)
             }
 
-            override fun onAnimationRepeat(p0: Animation?) { }
+            override fun onAnimationRepeat(animation: Animation?) {}
         })
-
-
     }
 }

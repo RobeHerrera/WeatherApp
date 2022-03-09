@@ -14,9 +14,18 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.MyWeatherApp.Start" parent="Theme.SplashScreen">
+        <!-- Propiedades de SplashScreen color de fondo e imágen-->
+        <item name="windowSplashScreenBackground">@color/purple_500</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/sunny_24</item>
+
+        <!-- El tema definido se usará en el resto del app -->
+        <item name="postSplashScreenTheme">@style/Theme.MyWeatherApp</item>
+    </style>
+
     <style name="Theme.MyWeatherApp.NoActionBar">
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

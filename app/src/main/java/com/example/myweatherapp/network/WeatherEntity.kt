@@ -1,6 +1,9 @@
 package com.example.myweatherapp.network
 
+import com.example.myweatherapp.model.Current
+
 data class WeatherEntity(
+    val current: Current,
     val base: String,
     val main: Main,
     val sys: Sys,
