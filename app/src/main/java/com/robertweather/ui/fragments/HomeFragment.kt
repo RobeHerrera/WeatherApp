@@ -18,6 +18,7 @@ private const val ONE_CALL_ENTITY = "oneCallEntity"
 
 class HomeFragment: Fragment(){
     private var oneCallEntity: OneCallEntity? = null
+    private var units: Boolean = false
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -31,6 +32,7 @@ class HomeFragment: Fragment(){
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         arguments?.let {
             oneCallEntity = it.getSerializable(ONE_CALL_ENTITY) as OneCallEntity
+            units = it.getSerializable("units") as Boolean
         }
         formatResponse(oneCallEntity)
         return binding.root
@@ -42,10 +44,11 @@ class HomeFragment: Fragment(){
          * @return A new instance of fragment HomeFragment.
          */
         @JvmStatic
-        fun newInstance(oneCallEntity: OneCallEntity) =
+        fun newInstance(oneCallEntity: OneCallEntity, units: Boolean) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(ONE_CALL_ENTITY, oneCallEntity)
+                    putSerializable("units", units)
                 }
             }
     }
@@ -60,12 +63,17 @@ class HomeFragment: Fragment(){
 
     private fun formatResponse(oneCallEntity: OneCallEntity?) {
             if (oneCallEntity != null) {
+                var unitSymbol = "ºC"
+
+                if (units) {
+                    unitSymbol = "ºF"
+                }
                 val current = oneCallEntity.current
                 val cityName = oneCallEntity.city?.name
                 val countryCode = oneCallEntity.city?.country
                 val address = "$cityName, $countryCode"
 
-                val temp = "${current.temp}°"
+                val temp = "${current.temp}$unitSymbol"
                 val sorterPredictions = oneCallEntity.hourly.sortedByDescending {it.temp}
                 val minTemp = "Min: ${sorterPredictions.last().temp.toInt()}°"
                 val maxTemp = "Max: ${sorterPredictions.first().temp.toInt()}°"

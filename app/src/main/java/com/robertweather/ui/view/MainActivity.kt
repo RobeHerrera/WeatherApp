@@ -1,4 +1,4 @@
-package com.robertweather.ui
+package com.robertweather.ui.view
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -10,12 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.robertweather.BuildConfig
 import com.robertweather.R
 import com.robertweather.databinding.ActivityMainBinding
@@ -26,6 +31,7 @@ import com.robertweather.network.weather.WeatherService
 import com.robertweather.ui.fragments.HomeErrorFragment
 import com.robertweather.ui.fragments.HomeFragment
 import com.robertweather.ui.fragments.HomeLoadingFragment
+import com.robertweather.ui.view.SettingsActivity
 import com.robertweather.utils.checkForInternet
 import com.robertweather.utils.showSnack
 import kotlinx.coroutines.Dispatchers
@@ -37,12 +43,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivityError"
     private lateinit var binding: ActivityMainBinding
-
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
 
     private var latitude = ""
     private var longitude = ""
+
+    private var units = false
+    private var language = false
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -57,6 +66,10 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         setupLocation()
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        units = sharedPreferences.getBoolean("units", false)
+        language = sharedPreferences.getBoolean("language", false)
     }
 
     private fun setupLocation(){
@@ -65,6 +78,60 @@ class MainActivity : AppCompatActivity() {
         } else {
             requestPermissions()
         }
+    }
+
+    /**
+     * Funciones de menú
+     */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.actions_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_actualizar -> {
+                // Toast.makeText(this, "Menú seleccionado", Toast.LENGTH_SHORT).show()
+                showCreateUserDialog("27")
+            }
+            R.id.preferenciasMenu -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * Función para generar un cuadro de diálogo
+     */
+    private fun showCreateUserDialog(temperature: String) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("La temperatura actual es: \"$temperature\".")
+            .setMessage("¿Quieres cambiar de ubicación?")
+            .setPositiveButton("Nueva ubicación") { _, _ ->
+                onConfirmLocationChange()
+            }
+            .setNegativeButton("Cancelar") { _, _ ->
+                showSnack(findViewById(android.R.id.content),getString(R.string.canceled_action))
+//                showSnackbar(R.string.canceled_action)
+            }
+            .show()
+    }
+    private fun onConfirmLocationChange() {
+        /* perform more business logic */
+    }
+
+    /**
+     * Complementarios para errores y visibilidad de las views
+     */
+
+    private fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showIndicator(visible: Boolean) {
+//        binding.progressBarIndicator.isVisible = visible
     }
 
     private fun showLoadingFragment() {
@@ -79,10 +146,10 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun showHomeFragment(oneCallEntity: OneCallEntity) {
+    private fun showHomeFragment(oneCallEntity: OneCallEntity, units: Boolean) {
         try {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.home_fragment_container, HomeFragment.newInstance(oneCallEntity))
+                .replace(R.id.home_fragment_container, HomeFragment.newInstance(oneCallEntity, units))
                 .commit()
         } catch (e: Exception) {
             showErrorFragment()
@@ -104,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                 )
                 if (oneCallEntity != null) {
                     oneCallEntity.city = city
-                    showHomeFragment(oneCallEntity)
+                    showHomeFragment(oneCallEntity, units)
                 } else {
                     showErrorFragment()
                 }
@@ -118,6 +185,16 @@ class MainActivity : AppCompatActivity() {
     private suspend fun getWeatherOneCall(latitude: String, longitude: String): OneCallEntity? = withContext(
         Dispatchers.IO){
         var result: OneCallEntity? = null
+        var unit = "metric"
+        var languageCode = "es"
+
+        if (units) {
+            unit = "imperial"
+        }
+        if (language) {
+            languageCode = "en"
+        }
+
         try {
             val retrofit: Retrofit = Retrofit.Builder()
                 .baseUrl(getString(R.string.open_weather_api_url))
@@ -129,8 +206,8 @@ class MainActivity : AppCompatActivity() {
             result = service.getOneCallByLatLng(
                 latitude,
                 longitude,
-                getString(R.string.metric_units),
-                getString(R.string.latin_spanish_language_code),
+                unit,
+                languageCode,
                 getString(R.string.api_key)
             )
         } catch (e: HttpException) {

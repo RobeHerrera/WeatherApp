@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.robertweather.R
 
@@ -35,6 +36,6 @@ fun showSnack(view: View, message: String, actionMessage:String? = null, onActio
             snack.dismiss()
         }
     }
-
     snack.show()
 }
+

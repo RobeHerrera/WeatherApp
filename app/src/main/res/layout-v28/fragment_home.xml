@@ -107,10 +107,12 @@
                 style="@style/TextAppearance.Material3.DisplayLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
                 android:textColor="@color/white"
                 android:textSize="86sp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@+id/image_weather"
+                app:layout_constraintHorizontal_bias="0.489"
                 app:layout_constraintStart_toStartOf="@+id/image_weather"
                 app:layout_constraintTop_toBottomOf="@+id/image_weather"
                 tools:text="24°" />
@@ -130,22 +132,25 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/container_extra_info"
-                android:layout_width="409dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_date">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_weather_wind"
-                    android:layout_width="135dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/flow"
+                    app:layout_constraintStart_toEndOf="@+id/flow"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:layout_editor_absoluteX="1dp">
+                    app:layout_constraintVertical_bias="0.0">
 
                     <ImageView
                         android:id="@+id/wind_icon"
@@ -189,13 +194,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_weather_pressure"
-                    android:layout_width="135dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/flow"
+                    app:layout_constraintStart_toEndOf="@+id/flow"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:layout_editor_absoluteX="137dp">
+                    app:layout_constraintVertical_bias="0.0">
 
                     <ImageView
                         android:id="@+id/pressure_icon"
@@ -242,13 +248,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_weather_humidity"
-                    android:layout_width="135dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/flow"
+                    app:layout_constraintStart_toEndOf="@+id/flow"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:layout_editor_absoluteX="273dp">
+                    app:layout_constraintVertical_bias="0.0">
 
                     <ImageView
                         android:id="@+id/humidity_icon"
@@ -295,7 +302,7 @@
 
                 <androidx.constraintlayout.helper.widget.Flow
                     android:id="@+id/flow"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:constraint_referenced_ids="container_weather_wind,container_weather_humidity,container_weather_pressure"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -310,7 +317,7 @@
         android:id="@+id/recycler_view_next_hours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:clipChildren="false"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
