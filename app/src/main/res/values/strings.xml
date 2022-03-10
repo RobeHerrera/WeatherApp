@@ -1,15 +1,17 @@
 <resources>
-    <string name="app_name">myWeatherApp</string>
-    <string name="sunrise">Amanecer</string>
-    <string name="sunset">Atardecer</string>
-    <string name="wind">Vientos</string>
-    <string name="pressure">"Presion: "</string>
-    <string name="humidity">Humedad</string>
-    <string name="created_by">Creado por</string>
-    <string name="dev_name">RobeHerrera</string>
-    <string name="update">Actualizar</string>
-    <string name="no_location_detected">No se puede acceder a la ubicación. Asegurate que el servicio esta activado en tu dispositivo</string>
-    <string name="permission_denied_explanation">El permiso fue negado, pero es indispensable para usar el app.</string>
-    <string name="permission_rationale">El permiso de ubicación es indispensable para usar el app.</string>
-    <string name="settings">Ajustes</string>
+    <string name="app_name">robertWeather</string>
+    <string name="formatted_temp">%1$s°</string>
+    <string name="no_internet">Sin acceso a internet</string>
+    <string name="open_weather_api_url">https://api.openweathermap.org/</string>
+    <string name="metric_units">metric</string>
+    <string name="latin_spanish_language_code">sp</string>
+    <string name="api_key">0ef90c40dac4979a685dea655151810a</string>
+    <string name="location_permission_required">Se necesita permiso de ubicacion</string>
+    <string name="ok">OK</string>
+    <string name="location_request_indispensable">El permiso de ubicacion es indispensable</string>
+    <string name="request">REQUEST</string>
+    <string name="permission_denied">Permiso denegado</string>
+    <string name="open_settings">Abrir ajustes</string>
+    <string name="temp_placeholder">24°</string>
+    <string name="time_placeholder">15:00</string>
 </resources>

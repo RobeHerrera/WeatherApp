@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MyWeatherApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.RobertWeather" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/dark_background</item>
+        <item name="colorPrimaryVariant">@color/dark_background</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -13,17 +13,14 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
-
-    <style name="Theme.MyWeatherApp.Start" parent="Theme.SplashScreen">
-        <!-- Propiedades de SplashScreen color de fondo e imágen-->
-        <item name="windowSplashScreenBackground">@color/purple_500</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/sunny_24</item>
-
-        <!-- El tema definido se usará en el resto del app -->
-        <item name="postSplashScreenTheme">@style/Theme.MyWeatherApp</item>
+    <style name="Theme.RobertWeather.Start" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/dark_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.RobertWeather</item>
+        <!--        <item name="android:windowSplashScreenBrandingImage">@drawable/splash_brand</item>-->
     </style>
 
-    <style name="Theme.MyWeatherApp.NoActionBar">
+    <style name="Theme.RobertWeather.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

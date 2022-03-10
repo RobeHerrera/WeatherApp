@@ -3,21 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/drawable/gradient_bg.xml" value="0.228" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/layout/activity_barriers.xml" value="0.25" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/layout/activity_setting.xml" value="0.19635416666666666" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.23385416666666667" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/layout/model.xml" value="0.25" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/layout/modelo.xml" value="0.19635416666666666" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/layout/settings_activity.xml" value="0.21927083333333333" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/menu/actions_menu.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWeatherApp/app/src/main/res/xml/root_preferences.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/layout/activity_barriers.xml" value="0.1" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/layout/model.xml" value="0.1" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/menu/actions.xml" value="0.18802083333333333" />
-        <entry key="..\:/Users/Robe/AndroidStudioProjects/myWheatherApp/app/src/main/res/menu/menu_main.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.196" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/drawable/bg_glass_card.xml" value="0.196" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/drawable/gradient_bg.xml" value="0.196" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/drawable/ic_launcher_background.xml" value="0.196" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/drawable/ic_twotone_device_thermostat_24.xml" value="0.196" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/drawable/ic_twotone_place_24.xml" value="0.196" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/drawable/ic_twotone_refresh_24.xml" value="0.196" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/layout-v28/fragment_home.xml" value="0.1515625" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/layout/fragment_home_error.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/layout/fragment_loading.xml" value="0.25" />
+        <entry key="..\:/Users/Robe/AndroidStudioProjects/robertWeather/app/src/main/res/layout/weather_small_card.xml" value="0.5263157894736842" />
       </map>
     </option>
   </component>
