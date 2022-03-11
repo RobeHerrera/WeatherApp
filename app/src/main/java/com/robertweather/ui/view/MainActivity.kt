@@ -90,10 +90,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_actualizar -> {
-                // Toast.makeText(this, "Menú seleccionado", Toast.LENGTH_SHORT).show()
-                showCreateUserDialog("27")
-            }
+//            R.id.menu_actualizar -> {
+//                // Toast.makeText(this, "Menú seleccionado", Toast.LENGTH_SHORT).show()
+//                showCreateUserDialog("27")
+//            }
             R.id.preferenciasMenu -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
