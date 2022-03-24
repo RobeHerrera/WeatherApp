@@ -1,7 +1,6 @@
-package com.robertweather.network.weather
+package com.robertweather.network.model
 
 
-import com.robertweather.network.city.CityEntity
 import java.io.Serializable
 
 data class OneCallEntity(

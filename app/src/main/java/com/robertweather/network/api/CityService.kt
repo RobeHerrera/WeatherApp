@@ -1,4 +1,6 @@
-package com.robertweather.network.city
+package com.robertweather.network.api
+import com.robertweather.network.model.CityEntity
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -8,5 +10,5 @@ interface CityService {
         @Query("lat") lat: String,
         @Query("lon") lon: String,
         @Query("appid") appid: String
-    ): List<CityEntity>
+    ): Response<List<CityEntity>>
 }

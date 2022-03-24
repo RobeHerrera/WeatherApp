@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.robertweather.R
-import com.robertweather.network.weather.Current
+import com.robertweather.network.model.Current
 import java.text.SimpleDateFormat
 import java.util.*
 

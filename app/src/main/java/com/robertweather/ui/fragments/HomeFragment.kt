@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.robertweather.databinding.FragmentHomeBinding
-import com.robertweather.network.weather.Current
-import com.robertweather.network.weather.OneCallEntity
+import com.robertweather.network.model.Current
+import com.robertweather.network.model.OneCallEntity
 import com.robertweather.ui.adapters.PredictionCardAdapter
 import java.text.SimpleDateFormat
 import java.util.*

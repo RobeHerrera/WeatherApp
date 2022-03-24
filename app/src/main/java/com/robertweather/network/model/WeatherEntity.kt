@@ -1,4 +1,4 @@
-package com.robertweather.network.weather
+package com.robertweather.network.model
 
 import java.io.Serializable
 

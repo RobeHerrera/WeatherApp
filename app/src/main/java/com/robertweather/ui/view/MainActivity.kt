@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -23,15 +24,16 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.robertweather.BuildConfig
 import com.robertweather.R
+import com.robertweather.core.SharedPreferencesInstance
 import com.robertweather.databinding.ActivityMainBinding
-import com.robertweather.network.city.CityEntity
-import com.robertweather.network.city.CityService
-import com.robertweather.network.weather.OneCallEntity
-import com.robertweather.network.weather.WeatherService
+import com.robertweather.network.model.CityEntity
+import com.robertweather.network.api.CityService
+import com.robertweather.network.model.OneCallEntity
+import com.robertweather.network.api.WeatherService
 import com.robertweather.ui.fragments.HomeErrorFragment
 import com.robertweather.ui.fragments.HomeFragment
 import com.robertweather.ui.fragments.HomeLoadingFragment
-import com.robertweather.ui.view.SettingsActivity
+import com.robertweather.ui.viewmodel.MainActivityViewModel
 import com.robertweather.utils.checkForInternet
 import com.robertweather.utils.showSnack
 import kotlinx.coroutines.Dispatchers
@@ -40,36 +42,45 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivityError"
     private lateinit var binding: ActivityMainBinding
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 34
-
     private var latitude = ""
     private var longitude = ""
 
     private var units = false
     private var language = false
 
+    val viewModel: MainActivityViewModel by viewModels()
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    lateinit var shared : SharedPreferencesInstance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        init()
         showLoadingFragment()
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
         setupLocation()
-
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         units = sharedPreferences.getBoolean("units", false)
         language = sharedPreferences.getBoolean("language", false)
+    }
+    private fun init(){
+        //Shared
+        shared = SharedPreferencesInstance.obtenerInstancia(this)
+
+        //binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        viewModel.onCreate()
     }
 
     private fun setupLocation(){
@@ -80,9 +91,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Funciones de menú
-     */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.actions_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -90,10 +98,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.menu_actualizar -> {
-//                // Toast.makeText(this, "Menú seleccionado", Toast.LENGTH_SHORT).show()
-//                showCreateUserDialog("27")
-//            }
             R.id.preferenciasMenu -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
@@ -102,37 +106,6 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /**
-     * Función para generar un cuadro de diálogo
-     */
-    private fun showCreateUserDialog(temperature: String) {
-        MaterialAlertDialogBuilder(this)
-            .setTitle("La temperatura actual es: \"$temperature\".")
-            .setMessage("¿Quieres cambiar de ubicación?")
-            .setPositiveButton("Nueva ubicación") { _, _ ->
-                onConfirmLocationChange()
-            }
-            .setNegativeButton("Cancelar") { _, _ ->
-                showSnack(findViewById(android.R.id.content),getString(R.string.canceled_action))
-//                showSnackbar(R.string.canceled_action)
-            }
-            .show()
-    }
-    private fun onConfirmLocationChange() {
-        /* perform more business logic */
-    }
-
-    /**
-     * Complementarios para errores y visibilidad de las views
-     */
-
-    private fun showError(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
-    private fun showIndicator(visible: Boolean) {
-//        binding.progressBarIndicator.isVisible = visible
-    }
 
     private fun showLoadingFragment() {
         supportFragmentManager.beginTransaction()
@@ -182,8 +155,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun getWeatherOneCall(latitude: String, longitude: String): OneCallEntity? = withContext(
-        Dispatchers.IO){
+
+    private suspend fun getWeatherOneCall(latitude: String, longitude: String): OneCallEntity?
+        = withContext(Dispatchers.IO){
         var result: OneCallEntity? = null
         var unit = "metric"
         var languageCode = "es"
@@ -209,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                 unit,
                 languageCode,
                 getString(R.string.api_key)
-            )
+            ).body()
         } catch (e: HttpException) {
             Log.e("MAIN_ACTIVITY", "getWeather: ${e.response()}")
         }
@@ -218,6 +192,8 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun getCityNameByLatLng(latitude: String, longitude: String): CityEntity? = withContext(
         Dispatchers.IO){
+
+//        viewModel.getCity(latitude, longitude, getString(R.string.api_key))
         var result: CityEntity? = null
         try {
             val retrofit: Retrofit = Retrofit.Builder()
@@ -231,7 +207,7 @@ class MainActivity : AppCompatActivity() {
                 latitude,
                 longitude,
                 getString(R.string.api_key)
-            ).first()
+            ).body()?.first()
         } catch (e: HttpException) {
             Log.e("MAIN_ACTIVITY", "getCity: ${e.response()}")
         }
@@ -273,6 +249,7 @@ class MainActivity : AppCompatActivity() {
             REQUEST_PERMISSIONS_REQUEST_CODE
         )
     }
+
 
     private fun requestPermissions(){
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
